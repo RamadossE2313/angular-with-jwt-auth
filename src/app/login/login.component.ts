@@ -28,12 +28,22 @@ export class LoginComponent {
 
   onSubmit(){
     debugger;
-    this.authService.login(this.loginForm.value).subscribe((response)=>{
-      localStorage.setItem("accessToken", response.accessToken);
-      console.log(response);
-      this.router.navigateByUrl("/weather");
-    }, (error) => {
-      console.log(error);
+    // this.authService.login(this.loginForm.value).subscribe((response)=>{
+    //   localStorage.setItem("accessToken", response.accessToken);
+    //   console.log(response);
+    //   this.router.navigateByUrl("/weather");
+    // }, (error) => {
+    //   console.log(error);
+    // })
+
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (response) => {
+        localStorage.setItem("accessToken", response.accessToken);
+        console.log(response);
+        this.router.navigateByUrl("/weather");
+      },
+      error: (e) => console.error(e),
+      complete: () => console.info('complete') 
     })
   }
 }
